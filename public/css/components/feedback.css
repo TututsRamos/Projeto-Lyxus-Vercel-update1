@@ -1,0 +1,138 @@
+.feedback-layout{
+
+    display:grid;
+
+    grid-template-columns:.85fr 1.15fr;
+
+    gap:60px;
+
+    align-items:center;
+
+}
+
+.feedback-info .section-title{
+
+    color:#FFFFFF;
+
+}
+
+.feedback-info .section-subtitle{
+
+    color:#B9B4CE;
+
+    margin:0;
+
+}
+
+.feedback-info .badge{
+
+    background:rgba(var(--acento-rgb),.15);
+
+    color:var(--acento);
+
+}
+
+/* ===== Trilho do carrossel ===== */
+
+.feedback-info{
+
+    min-width:0;
+
+}
+
+.feedback-carousel{
+
+    width:100%;
+    min-width:0;
+
+}
+
+.feedback-track{
+
+    display:flex;
+
+    gap:22px;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+
+    padding-bottom:6px;
+
+}
+
+.feedback-track::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+.feedback-track .card{
+
+    flex:0 0 62%;
+
+}
+
+@media(max-width:768px){
+
+    .feedback-track .card{
+
+        flex:0 0 80%;
+
+    }
+
+}
+
+/* ===== Barra de arrastar (scrub) ===== */
+
+.feedback-scrub{
+
+    position:relative;
+
+    height:3px;
+
+    border-radius:3px;
+
+    background:rgba(255,255,255,.12);
+
+    margin-top:22px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+}
+
+.feedback-scrub-fill{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    height:100%;
+
+    width:40%;
+
+    border-radius:3px;
+
+    background:var(--acento);
+
+    transition:width .1s linear;
+
+}
+
+/* ===== Layout responsivo ===== */
+
+@media(max-width:992px){
+
+    .feedback-layout{
+
+        grid-template-columns:1fr;
+
+        gap:35px;
+
+    }
+
+}

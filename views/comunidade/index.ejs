@@ -1,0 +1,84 @@
+<%- include("../partials/head", {
+    titulo: "Propostas à Comunidade • LYXUS Holding",
+    css: "comunidade"
+}) %>
+
+<%- include("../partials/navbar") %>
+
+<main class="bg-comunidade">
+
+    <section class="inst-hero">
+
+        <div class="container">
+
+            <span class="badge">PROPOSTAS ABERTAS</span>
+
+            <h1>Propostas à Comunidade</h1>
+
+            <p>
+                Iniciativas, parcerias e condições especiais que a LYXUS abre para a comunidade.
+                Confira o que está disponível agora e participe.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="inst-secao claro">
+
+        <div class="container">
+
+            <% if(!propostas.length){ %>
+
+                <div class="avaliacao-vazio">
+                    <i class="ri-hand-heart-line"></i>
+                    <p>Nenhuma proposta aberta no momento — volte em breve.</p>
+                </div>
+
+            <% } else { %>
+
+                <div class="comunidade-grid">
+
+                    <% propostas.forEach(function(p){ %>
+
+                        <a href="/comunidade/<%= p._id %>" class="comunidade-card">
+
+                            <div class="comunidade-card-topo">
+
+                                <% if(p.categoria){ %>
+                                    <span class="avaliacao-card-categoria"><%= p.categoria %></span>
+                                <% } %>
+
+                                <span class="comunidade-status <%= p.status === 'aberta' ? 'aberta' : 'encerrada' %>">
+                                    <%= p.status === "aberta" ? "Aberta" : "Encerrada" %>
+                                </span>
+
+                            </div>
+
+                            <h3><%= p.titulo %></h3>
+
+                            <% if(p.resumo){ %>
+                                <p><%= p.resumo %></p>
+                            <% } %>
+
+                            <% if(p.prazoParticipacao){ %>
+                                <span class="comunidade-prazo"><i class="ri-time-line"></i> <%= p.prazoParticipacao %></span>
+                            <% } %>
+
+                        </a>
+
+                    <% }) %>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+    </section>
+
+</main>
+
+<%- include("../partials/footer") %>
+
+<%- include("../partials/scripts", { js: "" }) %>

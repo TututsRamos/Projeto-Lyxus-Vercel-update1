@@ -1,0 +1,102 @@
+<%- include("../../partials/head", {
+    titulo: (modo === "novo" ? "Nova Proposta" : "Editar Proposta") + " • Comunidade",
+    css: "dashboard"
+}) %>
+
+<div class="dash-layout">
+
+    <%- include("../../partials/sidebar", { atual: "console-comunidade" }) %>
+
+    <main class="dash-main">
+
+        <header class="dash-header">
+            <div>
+                <h1><%= modo === "novo" ? "Nova proposta à comunidade" : "Editar proposta à comunidade" %></h1>
+                <p>Aparece publicamente em /comunidade quando estiver "aberta" e "visível".</p>
+            </div>
+        </header>
+
+        <% if(erro){ %>
+            <div class="login-erro" style="margin-bottom:20px;"><%= erro %></div>
+        <% } %>
+
+        <form
+            method="POST"
+            action="<%= modo === 'novo' ? '/dashboard/console/comunidade' : '/dashboard/console/comunidade/' + dados._id %>"
+            class="form-dashboard">
+
+            <div class="painel">
+
+                <div class="painel-titulo"><h2>Dados da proposta</h2></div>
+
+                <div class="campo-linha">
+
+                    <div class="campo">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" name="titulo" value="<%= dados.titulo || '' %>" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="categoria">Categoria</label>
+                        <input type="text" id="categoria" name="categoria" value="<%= dados.categoria || '' %>" placeholder="Ex: Parceria, Projeto social...">
+                    </div>
+
+                </div>
+
+                <div class="campo">
+                    <label for="resumo">Resumo (aparece no card da listagem)</label>
+                    <input type="text" id="resumo" name="resumo" value="<%= dados.resumo || '' %>" maxlength="160">
+                </div>
+
+                <div class="campo">
+                    <label for="descricao">Descrição completa</label>
+                    <textarea id="descricao" name="descricao" rows="5" required><%= dados.descricao || '' %></textarea>
+                </div>
+
+                <div class="campo-linha">
+
+                    <div class="campo">
+                        <label for="prazoParticipacao">Prazo de participação</label>
+                        <input type="text" id="prazoParticipacao" name="prazoParticipacao" value="<%= dados.prazoParticipacao || '' %>" placeholder="Ex: Até 30/09/2026">
+                    </div>
+
+                    <div class="campo">
+                        <label for="textoBotao">Texto do botão</label>
+                        <input type="text" id="textoBotao" name="textoBotao" value="<%= dados.textoBotao || 'Quero participar' %>">
+                    </div>
+
+                </div>
+
+                <div class="campo-linha">
+
+                    <div class="campo">
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+                            <option value="aberta" <%= dados.status !== "encerrada" ? "selected" : "" %>>Aberta</option>
+                            <option value="encerrada" <%= dados.status === "encerrada" ? "selected" : "" %>>Encerrada</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label style="display:flex;align-items:center;gap:8px;">
+                            <input type="checkbox" name="ativo" <%= (dados.ativo === undefined || dados.ativo) ? "checked" : "" %>>
+                            Visível na área pública
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-dashboard-acoes">
+                <a href="/dashboard/console/comunidade" class="btn-secundario-dash">Cancelar</a>
+                <button type="submit" class="btn"><%= modo === "novo" ? "Cadastrar" : "Salvar alterações" %></button>
+            </div>
+
+        </form>
+
+    </main>
+
+</div>
+
+<%- include("../../partials/scripts", { js: "dashboard" }) %>

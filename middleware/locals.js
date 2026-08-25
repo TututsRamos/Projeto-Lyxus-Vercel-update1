@@ -1,0 +1,70 @@
+import Configuracao from "../models/Configuracao.js";
+import Destaque from "../models/Destaque.js";
+import { gerarLinkWhatsapp } from "../utils/whatsapp.js";
+//import formatarData from "../utils/formatarData.js";
+
+export default async function(req,res,next){
+
+    try{
+
+        res.locals.usuario = req.session.usuario || null;
+
+        // Helpers de permissão pras views do dashboard. master/admin
+        // sempre têm acesso total; staff só se a chave estiver no
+        // array "permissoes" salvo no usuário (definido pelo master
+        // em /dashboard/usuarios).
+        res.locals.souMaster = !!(req.session.usuario && ["master","admin"].includes(req.session.usuario.tipo));
+
+        res.locals.temPermissao = function(chave){
+
+            const u = req.session.usuario;
+
+            if(!u) return false;
+
+            if(["master","admin"].includes(u.tipo)) return true;
+
+            return Array.isArray(u.permissoes) && u.permissoes.includes(chave);
+
+        };
+
+        const configuracao = await Configuracao.findOne();
+
+        res.locals.config = configuracao;
+
+        // Destaques da semana — cards mostrados nas telas de login e
+        // cadastro (na parte inferior do painel de marca), no lugar
+        // do texto fixo genérico. Podem existir vários simultâneos,
+        // cada um mirando login, cadastro ou os dois — por isso já
+        // separamos aqui em duas listas prontas pra cada tela usar.
+        const destaquesAtivos = await Destaque.find({ ativo:true })
+            .sort({ createdAt:-1 });
+
+        res.locals.destaquesLogin = destaquesAtivos.filter(
+            d => d.exibirEm === "ambos" || d.exibirEm === "login"
+        );
+
+        res.locals.destaquesCadastro = destaquesAtivos.filter(
+            d => d.exibirEm === "ambos" || d.exibirEm === "cadastro"
+        );
+
+        // Link pronto do WhatsApp, usado no botão "Contato" da navbar,
+        // no ícone do rodapé e em outros pontos do site. Usa o número
+        // cadastrado em dashboard/configuracoes; se ainda não tiver
+        // sido preenchido, cai no número padrão da LYXUS.
+        res.locals.linkWhatsapp = gerarLinkWhatsapp(
+            configuracao && configuracao.whatsapp
+        );
+
+       // res.locals.formatarData = formatarData;
+
+        next();
+
+    }catch(err){ 
+
+        console.error(err);
+
+        next();
+
+    }
+
+}
