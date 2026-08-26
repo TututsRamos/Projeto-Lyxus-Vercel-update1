@@ -120,6 +120,12 @@ export function soCliente(req, res, next){
 
     }
 
+    if(req.session.usuario.tipo === "visitante"){
+
+        return res.redirect("/cadastro/aguardando");
+
+    }
+
     if(req.session.usuario.tipo !== "cliente"){
 
         return res.status(403).render("erro/500", {
