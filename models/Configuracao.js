@@ -60,6 +60,20 @@ const configuracaoSchema = new mongoose.Schema({
     tawkDashboardUrl:{
         type:String,
         default:"https://dashboard.tawk.to/"
+    },
+
+    // Property ID e Widget ID do widget de chat (tawk.to) que aparece
+    // pro visitante em todas as páginas do site (ver views/partials/footer.ejs).
+    // Não confundir com tawkDashboardUrl, que é só o link pra tela de
+    // atendimento que o suporte usa pra responder.
+    tawkPropertyId:{
+        type:String,
+        default:"6a8e3d6eb37bbb3447aea39e"
+    },
+
+    tawkWidgetId:{
+        type:String,
+        default:"1k0tpvubj"
     }
     },{
     timestamps:true

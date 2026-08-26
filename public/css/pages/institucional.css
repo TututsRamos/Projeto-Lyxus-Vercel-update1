@@ -614,7 +614,24 @@ main.bg-apoiadores .inst-secao.claro{
 
     color:var(--texto);
 
+    background:var(--surface);
+
     transition:var(--transition);
+
+}
+
+.inst-form .campo input::placeholder,
+.inst-form .campo textarea::placeholder{
+
+    color:var(--texto-claro);
+
+    opacity:.75;
+
+}
+
+.inst-form .campo select{
+
+    color-scheme:light dark;
 
 }
 

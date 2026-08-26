@@ -86,6 +86,10 @@ const configController = {
 
             configuracao.tawkDashboardUrl = req.body.tawkDashboardUrl;
 
+            configuracao.tawkPropertyId = req.body.tawkPropertyId;
+
+            configuracao.tawkWidgetId = req.body.tawkWidgetId;
+
             if(req.files?.logo){
 
                 configuracao.logo = req.files.logo[0].filename;

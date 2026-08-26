@@ -76,7 +76,7 @@
 
     transition:var(--transition);
 
-    color:var(--secundaria);
+    color:var(--link-chrome);
 
     display:inline-flex;
 
@@ -88,7 +88,7 @@
 
 .footer li a:hover{
 
-    color:var(--secundaria-hover);
+    color:var(--link-chrome-hover);
 
 }
 

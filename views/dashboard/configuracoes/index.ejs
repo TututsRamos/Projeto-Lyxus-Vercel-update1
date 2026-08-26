@@ -189,6 +189,22 @@
 
                 </div>
 
+                <div class="campo-linha">
+
+                    <div class="campo">
+                        <label for="tawkPropertyId">Property ID do widget (tawk.to)</label>
+                        <input type="text" id="tawkPropertyId" name="tawkPropertyId" value="<%= configuracao.tawkPropertyId || '' %>" placeholder="Ex: 6a8e3d6eb37bbb3447aea39e">
+                        <small>Primeiro trecho da URL do script, antes da última barra.</small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="tawkWidgetId">Widget ID (tawk.to)</label>
+                        <input type="text" id="tawkWidgetId" name="tawkWidgetId" value="<%= configuracao.tawkWidgetId || '' %>" placeholder="Ex: 1k0tpvubj">
+                        <small>Esses dois campos ligam o chat que aparece pros visitantes do site (em todas as páginas). Pra pegar os valores certos, entre no painel do tawk.to em Administration → Chat Widget → código do widget.</small>
+                    </div>
+
+                </div>
+
                 <div class="form-dashboard-acoes">
                     <button type="submit" class="btn">Salvar configurações</button>
                 </div>
