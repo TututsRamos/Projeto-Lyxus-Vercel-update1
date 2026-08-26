@@ -4,12 +4,14 @@
 
     var TEMAS = ["padrao", "escuro", "invertido"];
 
+    var TEMA_PADRAO = "escuro";
+
     function temaSalvo() {
         try {
             var t = localStorage.getItem(CHAVE);
-            return TEMAS.indexOf(t) !== -1 ? t : "padrao";
+            return TEMAS.indexOf(t) !== -1 ? t : TEMA_PADRAO;
         } catch (e) {
-            return "padrao";
+            return TEMA_PADRAO;
         }
     }
 

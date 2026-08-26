@@ -34,15 +34,18 @@ const usuarioSchema = new mongoose.Schema({
 
     // ==========================
     // Papel do usuário no sistema
-    // master  -> usuário mestre, único, cria administradores
-    // admin   -> acessa o console de administrador
-    // staff   -> cria/gerencia propostas para clientes
-    // cliente -> acessa apenas suas propostas liberadas
+    // master     -> usuário mestre, único, cria administradores
+    // admin      -> acessa o console de administrador
+    // staff      -> cria/gerencia propostas para clientes
+    // cliente    -> acessa apenas suas propostas liberadas
+    // visitante  -> acabou de se cadastrar e ainda aguarda
+    //               aprovação do usuário mestre; acesso bem
+    //               limitado até virar "cliente"
     // ==========================
 
     tipo:{
         type:String,
-        enum:["master","admin","staff","cliente"],
+        enum:["master","admin","staff","cliente","visitante"],
         default:"cliente"
     },
 

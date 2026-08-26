@@ -1,3 +1,10 @@
+<%
+    const msgBloqueioVisitante = "Essa área ainda não está disponível pra sua conta. Aguarde a aprovação para ter acesso.";
+    const ehVisitante = !!(usuario && usuario.tipo === "visitante");
+    const claseBloqueioVisitante = ehVisitante ? "bloqueado-visitante" : "";
+    const dataBloqueioVisitante = ehVisitante ? ` data-bloqueado-msg="${msgBloqueioVisitante}"` : "";
+%>
+
 <header class="navbar">
 
     <div class="container navbar-container">
@@ -11,19 +18,39 @@
 
         <nav class="nav-menu">
 
-            <a href="/">Home</a>
+            <div class="nav-item-dropdown" data-nav-dropdown>
+
+                <div class="nav-dropdown-toggle">
+
+                    <a href="/">Home</a>
+
+                    <button type="button" class="nav-dropdown-caret" data-nav-dropdown-caret aria-label="Abrir submenu do Home">
+                        <i class="ri-menu-3-line"></i>
+                    </button>
+
+                </div>
+
+                <div class="nav-dropdown-menu">
+
+                    <a href="/#servicos"><i class="ri-service-line"></i>Serviços</a>
+
+                    <a href="/#processo"><i class="ri-flow-chart"></i>Como Trabalhamos</a>
+
+                    <a href="/#feedbacks"><i class="ri-chat-quote-line"></i>Feedbacks</a>
+
+                    <a href="/#faq"><i class="ri-question-line"></i>FAQ</a>
+
+                </div>
+
+            </div>
 
             <a href="/sobre">Sobre</a>
 
-            <a href="/#servicos">Serviços</a>
+            <a href="/avaliacao">Score Lyxus</a>
 
-            <a href="/#processo">Como Trabalhamos</a>
+            <a href="/pacotes" class="<%= claseBloqueioVisitante %>"<%- dataBloqueioVisitante %>>Pacotes</a>
 
-            <a href="/#feedbacks">Feedbacks</a>
-
-            <a href="/pacotes">Pacotes</a>
-
-            <a href="/#faq">FAQ</a>
+            <a href="/faq">FAQ</a>
 
             <a href="<%= linkWhatsapp %>" target="_blank" rel="noopener noreferrer">Contato</a>
 
@@ -71,7 +98,7 @@
 
             <% } %>
 
-            <a href="/pacotes" class="btn">
+            <a href="/pacotes" class="btn <%= claseBloqueioVisitante %>"<%- dataBloqueioVisitante %>>
 
                 <span class="cta-texto-completo">Solicitar um Orçamento</span>
                 <span class="cta-texto-curto">Orçamento</span>
@@ -84,7 +111,7 @@
                 title="Minha conta"
                 data-abrir-conta-drawer>
 
-                <i class="ri-user-3-line"></i>
+                <i class="ri-settings-3-line"></i>
 
             </button>
 

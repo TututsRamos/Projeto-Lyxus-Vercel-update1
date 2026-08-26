@@ -10,6 +10,8 @@ function destinoPorTipo(usuario){
 
     if(tipo === "admin" || tipo === "master") return "/dashboard";
 
+    if(tipo === "visitante") return "/cadastro/aguardando";
+
     if(tipo === "staff"){
 
         const permissoes = usuario.permissoes || [];

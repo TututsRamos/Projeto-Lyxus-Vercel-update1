@@ -22,6 +22,9 @@
         (function(){
             try{
                 var t = localStorage.getItem("lyxus-tema");
+                if(!t){
+                    t = "escuro";
+                }
                 if(t && t !== "padrao"){
                     document.documentElement.setAttribute("data-theme", t);
                 }

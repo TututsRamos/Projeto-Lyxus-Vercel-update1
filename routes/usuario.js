@@ -20,4 +20,8 @@ router.post("/editar/:id", auth, soMaster, upload.single("foto"), usuarioControl
 
 router.get("/excluir/:id", auth, soMaster, usuarioController.excluir);
 
+router.post("/:id/aprovar", auth, soMaster, usuarioController.aprovar);
+
+router.post("/:id/recusar", auth, soMaster, usuarioController.recusar);
+
 export default router; 

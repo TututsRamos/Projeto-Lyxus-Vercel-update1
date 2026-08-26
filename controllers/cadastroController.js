@@ -6,6 +6,7 @@ function destinoPorTipo(tipo){
 
     if(tipo === "staff") return "/staff";
     if(tipo === "admin" || tipo === "master") return "/dashboard";
+    if(tipo === "visitante") return "/cadastro/aguardando";
 
     return "/painel";
 
@@ -87,7 +88,7 @@ const cadastroController = {
                 nome,
                 email,
                 senha: senhaCriptografada,
-                tipo:"cliente"
+                tipo:"visitante"
             });
 
             req.session.usuario = {
@@ -101,6 +102,45 @@ const cadastroController = {
             };
 
             res.redirect(destinoPorTipo(usuario.tipo));
+
+        }catch(err){
+
+            console.error(err);
+            res.status(500).render("erro/500");
+
+        }
+
+    },
+
+    // ==========================
+    // Tela de espera ("aguardando aprovação")
+    // Reconsulta o banco pra saber se o mestre já aprovou
+    // (mudou o tipo pra "cliente") desde o cadastro/último
+    // login — se sim, manda direto pro painel.
+    // ==========================
+
+    async aguardando(req, res){
+
+        try{
+
+            const usuario = await Usuario.findById(req.session.usuario.id);
+
+            if(!usuario){
+
+                req.session.destroy(()=>{});
+                return res.redirect("/login");
+
+            }
+
+            if(usuario.tipo !== "visitante"){
+
+                req.session.usuario.tipo = usuario.tipo;
+
+                return res.redirect(destinoPorTipo(usuario.tipo));
+
+            }
+
+            res.render("cadastro/aguardando");
 
         }catch(err){
 

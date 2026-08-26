@@ -350,6 +350,80 @@ const usuarioController={
 
         }
 
+    },
+
+    // ===========================
+    // APROVAR (visitante -> cliente)
+    // ===========================
+
+    async aprovar(req,res){
+
+        try{
+
+            const usuario = await Usuario.findById(req.params.id);
+
+            if(!usuario || usuario.tipo !== "visitante"){
+
+                return res.redirect("/dashboard/usuarios");
+
+            }
+
+            usuario.tipo = "cliente";
+
+            await usuario.save();
+
+            await registrarLog(
+                "usuario_aprovado",
+                req.session.usuario.id,
+                `Aprovou a conta de ${usuario.nome} (${usuario.email}), agora cliente`
+            );
+
+            res.redirect("/dashboard/usuarios");
+
+        }catch(err){
+
+            console.error(err);
+
+            res.status(500).render("erro/500");
+
+        }
+
+    },
+
+    // ===========================
+    // RECUSAR (exclui a conta visitante)
+    // ===========================
+
+    async recusar(req,res){
+
+        try{
+
+            const usuario = await Usuario.findById(req.params.id);
+
+            if(!usuario || usuario.tipo !== "visitante"){
+
+                return res.redirect("/dashboard/usuarios");
+
+            }
+
+            await Usuario.findByIdAndDelete(req.params.id);
+
+            await registrarLog(
+                "usuario_recusado",
+                req.session.usuario.id,
+                `Recusou o cadastro de ${usuario.nome} (${usuario.email})`
+            );
+
+            res.redirect("/dashboard/usuarios");
+
+        }catch(err){
+
+            console.error(err);
+
+            res.status(500).render("erro/500");
+
+        }
+
     }
 
 };
